@@ -183,6 +183,29 @@ data:image/svg+xml;utf8,
             </div>
         </div>
     </section>
+    <section id="erd" class="mt-4">
+        <div class="card shadow-sm lift">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Entity–Relationship Diagram</h2>
+
+                <figure class="mb-0 text-center">
+                    <img src='@Url.Content("~/images/team/ERD.jpg")'
+                         class="img-fluid rounded-3 border erd-img"
+                         alt="FairShare ERD diagram"
+                         loading="lazy"
+                         onerror="this.onerror=null;
+                   this.src='@Url.Content("~/images/team/ERD.png")';
+                   if(!this.complete || typeof this.naturalWidth==='undefined' || this.naturalWidth===0){
+                     this.src='@Url.Content("~/images/team/ERD.svg")';
+                   }" />
+                    <figcaption class="small text-muted mt-2">
+                        FairShare data model (users, groups, expenses, splits, payments/settlements, activity log).
+                    </figcaption>
+                </figure>
+
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- Page-scoped styles -->
