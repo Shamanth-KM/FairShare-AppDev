@@ -15,11 +15,11 @@ namespace FairShare.Web.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CreatedUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
+                    CreatedUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,12 +30,12 @@ namespace FairShare.Web.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,14 +46,14 @@ namespace FairShare.Web.Migrations
                 name: "Expenses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SpentOnUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
-                    PaidByUserId = table.Column<int>(type: "int", nullable: false)
+                    SpentOnUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    GroupId = table.Column<int>(type: "INTEGER", nullable: true),
+                    PaidByUserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,10 +76,10 @@ namespace FairShare.Web.Migrations
                 name: "GroupMembers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    GroupId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,12 +102,12 @@ namespace FairShare.Web.Migrations
                 name: "ExpenseShares",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpenseId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ExpenseId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     ShareAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsSettled = table.Column<bool>(type: "bit", nullable: false)
+                    IsSettled = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,16 +127,6 @@ namespace FairShare.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExpenseShares_ExpenseId",
-                table: "ExpenseShares",
-                column: "ExpenseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpenseShares_UserId",
-                table: "ExpenseShares",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Expenses_GroupId",
                 table: "Expenses",
                 column: "GroupId");
@@ -145,6 +135,16 @@ namespace FairShare.Web.Migrations
                 name: "IX_Expenses_PaidByUserId",
                 table: "Expenses",
                 column: "PaidByUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpenseShares_ExpenseId",
+                table: "ExpenseShares",
+                column: "ExpenseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpenseShares_UserId",
+                table: "ExpenseShares",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMembers_GroupId",

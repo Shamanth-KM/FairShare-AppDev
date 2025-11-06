@@ -2,6 +2,7 @@ namespace FairShare.Web.Services
 {
     public interface ICurrencyRateService
     {
-        Task<decimal?> GetRateAsync(string fromCurrency, string toCurrency, CancellationToken ct = default);
+        /// Returns the rate to convert 1 {from} into {to}; null if unavailable.
+        Task<decimal?> GetRateAsync(string from, string to, CancellationToken ct = default);
     }
 }

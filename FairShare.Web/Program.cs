@@ -7,9 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // MVC
 builder.Services.AddControllersWithViews();
 
-// EF Core
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// ---- Database provider toggle (Sqlite locally, SqlServer in Azure) ----
+var provider = builder.Configuration["DatabaseProvider"] ?? "SqlServer";
+if (provider.Equals("Sqlite", StringComparison.OrdinalIgnoreCase))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 // External API (fetch-only currency rates)
 builder.Services.AddHttpClient<ICurrencyRateService, CurrencyRateService>(client =>
@@ -21,13 +30,14 @@ builder.Services.AddHttpClient<ICurrencyRateService, CurrencyRateService>(client
 });
 
 var app = builder.Build();
+Console.WriteLine($"DB Provider => {builder.Configuration["DatabaseProvider"]}");
+
 // DEV ONLY: apply migrations + seed
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await DbSeeder.SeedAsync(db);
 }
-
 
 if (!app.Environment.IsDevelopment())
 {
