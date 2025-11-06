@@ -1,0 +1,8 @@
+@model FairShare.Web.Models.User
+@{
+    ViewData["Title"] = "User Details";
+}
+<h2>@Model.Name</h2>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Active:</strong> @Model.IsActive</p>
+<a asp-action="Index" class="btn btn-link">Back</a>

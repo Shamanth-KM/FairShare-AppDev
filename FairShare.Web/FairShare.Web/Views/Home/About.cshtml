@@ -1,0 +1,255 @@
+﻿@{
+    ViewData["Title"] = "About FairShare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Inline SVG fallback avatar (no network request)
+    string FallbackAvatar(string initials) => $@"
+data:image/svg+xml;utf8,
+<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'>
+  <defs>
+    <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+      <stop offset='0%' stop-color='%236366f1'/>
+      <stop offset='100%' stop-color='%230ea5e9'/>
+    </linearGradient>
+  </defs>
+  <rect width='100%' height='100%' rx='80' fill='url(%23g)'/>
+  <text x='50%' y='55%' text-anchor='middle' font-family=""Segoe UI, Roboto, Arial""
+        fill='white' font-size='56' font-weight='700'>{initials}</text>
+</svg>";
+}
+
+<div class="container py-5">
+    <!-- Hero -->
+    <section class="row align-items-center g-4 mb-5">
+        <div class="col-12 col-lg-7">
+            <h1 class="display-5 fw-bold mb-3">Split expenses fairly, stay friends easily.</h1>
+            <p class="lead text-secondary mb-4">
+                FairShare helps roommates, friends, and teams track shared costs, settle up fast,
+                and keep every dollar transparent.
+            </p>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="mb-5">
+        <div class="row g-4 align-items-center">
+            <div class="col-12 col-lg-6">
+                <div class="p-4 p-lg-5 bg-light rounded-4 h-100">
+                    <h2 class="h3 fw-bold mb-3">Our mission</h2>
+                    <p class="mb-0 text-secondary">
+                        We believe money shouldn’t strain relationships. FairShare removes the awkwardness
+                        of IOUs with simple tracking, smart suggestions, and one-click settlement.
+                        Transparency first, always.
+                    </p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <ul class="list-unstyled m-0">
+                    <li class="d-flex align-items-start gap-3 mb-3">
+                        <div class="bullet">✓</div>
+                        <div>
+                            <h3 class="h5 mb-1">Fair by design</h3>
+                            <p class="text-secondary mb-0">Split equally, by shares, or custom amounts—your call.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start gap-3 mb-3">
+                        <div class="bullet">✓</div>
+                        <div>
+                            <h3 class="h5 mb-1">Crystal clear</h3>
+                            <p class="text-secondary mb-0">Every expense has context—who paid, who owes, and why.</p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start gap-3">
+                        <div class="bullet">✓</div>
+                        <div>
+                            <h3 class="h5 mb-1">Built for teams</h3>
+                            <p class="text-secondary mb-0">Groups, categories, notes, and exports keep everyone aligned.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="mb-5">
+        <h2 class="h3 fw-bold mb-4">How it works</h2>
+        <div class="row g-4">
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <span class="step-index">1</span>
+                        <h3 class="h5 mt-2">Create a group</h3>
+                        <p class="text-secondary mb-0">Add your roommate crew or trip friends and set your default split style.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <span class="step-index">2</span>
+                        <h3 class="h5 mt-2">Log expenses</h3>
+                        <p class="text-secondary mb-0">Who paid and for what? Add receipts and notes for clarity.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <span class="step-index">3</span>
+                        <h3 class="h5 mt-2">Settle up</h3>
+                        <p class="text-secondary mb-0">Use the simplest path to even—cash, wallet, or any method you agree on.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature highlights -->
+    <section class="mb-5">
+        <h2 class="h3 fw-bold mb-4">Why people choose FairShare</h2>
+        <div class="row g-4">
+            <div class="col-12 col-lg-6">
+                <div class="feature p-4 rounded-4 h-100">
+                    <h3 class="h5">Fast & friendly UI</h3>
+                    <p class="text-secondary mb-0">Delightful forms, keyboard shortcuts, and clean tables keep things quick.</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="feature p-4 rounded-4 h-100">
+                    <h3 class="h5">Data you control</h3>
+                    <p class="text-secondary mb-0">Export to CSV anytime. Your data belongs to you, period.</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="feature p-4 rounded-4 h-100">
+                    <h3 class="h5">Smart suggestions</h3>
+                    <p class="text-secondary mb-0">We surface likely splits and detect duplicates to save time.</p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="feature p-4 rounded-4 h-100">
+                    <h3 class="h5">Built on trust</h3>
+                    <p class="text-secondary mb-0">Clear histories and audit-friendly settlement records.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="mb-5">
+        <h2 class="h3 fw-bold mb-4">Meet the team</h2>
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="team-card text-center p-4 rounded-4 shadow-sm h-100">
+                    <img src="@Url.Content("~/images/team/manideep.jpg")"
+                         alt="Manideep Kadarla"
+                         class="team-photo mb-3"
+                         width="120" height="120" loading="lazy"
+                         onerror="this.onerror=null; this.src='@FallbackAvatar("MK")';" />
+                    <h3 class="h5 mb-1">Manideep Kadarla</h3>
+                    <div class="text-secondary small">
+                        Backend APIs &amp; EF Core; DB schema/migrations; share-calculation logic.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="team-card text-center p-4 rounded-4 shadow-sm h-100">
+                    <img src="@Url.Content("~/images/team/shamanth.jpg")"
+                         alt="Shamanth Kodipura Mahesh"
+                         class="team-photo mb-3"
+                         width="120" height="120" loading="lazy"
+                         onerror="this.onerror=null; this.src='@FallbackAvatar("SK")';" />
+                    <h3 class="h5 mb-1">Shamanth Kodipura Mahesh</h3>
+                    <div class="text-secondary small">
+                        UI/UX with Bootstrap; Razor views; Chart.js analytics and data visualizations.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="team-card text-center p-4 rounded-4 shadow-sm h-100">
+                    <img src="@Url.Content("~/images/team/ujwala.jpg")"
+                         alt="Ujwala Tripurana"
+                         class="team-photo mb-3"
+                         width="120" height="120" loading="lazy"
+                         onerror="this.onerror=null; this.src='@FallbackAvatar("UT")';" />
+                    <h3 class="h5 mb-1">Ujwala Tripurana</h3>
+                    <div class="text-secondary small">
+                        Project setup &amp; integration; testing/QA; documentation and deployment support.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="erd" class="mt-4">
+        <div class="card shadow-sm lift">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Entity–Relationship Diagram</h2>
+
+                <figure class="mb-0 text-center">
+                    <img src='@Url.Content("~/images/team/ERD.jpg")'
+                         class="img-fluid rounded-3 border erd-img"
+                         alt="FairShare ERD diagram"
+                         loading="lazy"
+                         onerror="this.onerror=null;
+                   this.src='@Url.Content("~/images/team/ERD.png")';
+                   if(!this.complete || typeof this.naturalWidth==='undefined' || this.naturalWidth===0){
+                     this.src='@Url.Content("~/images/team/ERD.svg")';
+                   }" />
+                    <figcaption class="small text-muted mt-2">
+                        FairShare data model (users, groups, expenses, splits, payments/settlements, activity log).
+                    </figcaption>
+                </figure>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Page-scoped styles -->
+<style>
+    .bullet {
+        width: 28px;
+        height: 28px;
+        line-height: 26px;
+        border-radius: 999px;
+        text-align: center;
+        border: 1px solid var(--bs-border-color);
+    }
+
+    .step-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        background: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary);
+        font-weight: 700;
+    }
+
+    .feature {
+        background: var(--bs-light);
+        border: 1px dashed var(--bs-border-color);
+    }
+
+    .team-card {
+        background: var(--bs-white);
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.08);
+        }
+
+    .team-photo {
+        object-fit: cover;
+        border-radius: 999px;
+        border: 4px solid var(--bs-body-bg);
+        box-shadow: 0 0 0 1px var(--bs-border-color);
+    }
+</style>

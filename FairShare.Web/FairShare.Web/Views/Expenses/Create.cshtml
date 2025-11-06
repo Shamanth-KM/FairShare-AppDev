@@ -1,0 +1,74 @@
+﻿@model FairShare.Web.Models.Expense
+@{
+    ViewData["Title"] = "Add Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="position-relative overflow-hidden bg-dark">
+    <div class="container position-relative py-5">
+        <h1 class="display-6 fw-bold text-white mb-0">Add Expense</h1>
+    </div>
+</header>
+
+<main class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <!-- 🔔 show server-side errors -->
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            @if (ViewData["DebugHit"] != null)
+            {
+                <div class="small text-muted">@ViewData["DebugHit"]</div>
+            }
+
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Amount" class="form-label"></label>
+                        <input asp-for="Amount" class="form-control" type="number" step="0.01" min="0" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Group</label>
+                        <select asp-for="GroupId" class="form-select" asp-items="ViewBag.GroupId">
+                            <option value="">-- Select Group --</option>
+                        </select>
+                        <span asp-validation-for="GroupId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Paid By</label>
+                        <select asp-for="PaidByUserId" class="form-select" asp-items="ViewBag.PaidByUserId">
+                            <option value="">-- Select User --</option>
+                        </select>
+                        <span asp-validation-for="PaidByUserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="SpentOnUtc" class="form-label">Date</label>
+                        <input asp-for="SpentOnUtc" class="form-control" type="date" />
+                        <span asp-validation-for="SpentOnUtc" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

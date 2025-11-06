@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "FairShare — Shared Expense Tracker";
+}
+
+<header class="hero-section position-relative overflow-hidden">
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="container position-relative py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-7 text-light">
+                <h1 class="display-5 fw-bold mb-3 hero-title">
+                    Split group expenses. Settle up. Stay friends.
+                </h1>
+                <p class="lead mb-4 hero-subtitle">
+                    FairShare helps roommates, friends, and teams track shared costs and see who owes whom — clearly and fairly.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a class="btn btn-primary btn-lg" asp-controller="Expenses" asp-action="Index">View Analytics</a>
+                    <a class="btn btn-outline-light btn-lg" asp-controller="Home" asp-action="About">How it Works</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <div class="glass-card p-4" role="region" aria-label="Active group snapshot">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-uppercase small text-muted">Active Group</div>
+                            <div class="fs-3 fw-bold">Room 204</div>
+                            <div class="small">4 members</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-uppercase small text-muted">Unsettled</div>
+                            <div class="fs-3 fw-bold">$146.30</div>
+                            <div class="small">Across 8 expenses</div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between small">
+                        <div>Largest balance (owes)</div>
+                        <div class="fw-semibold">$58.75</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5">
+    <section class="mb-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm lift">
+                    <div class="card-body">
+                        <h2 class="h5 mb-2">Add Expenses</h2>
+                        <p class="text-muted mb-3">Record who paid, what for, and how to split — equally or custom weights.</p>
+                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Create">Create Expenses</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm lift">
+                    <div class="card-body">
+                        <h2 class="h5 mb-2">View Expenses</h2>
+                        <p class="text-muted mb-3">Set up a group for roommates, trips, or projects. Invite members and start logging expenses.</p>
+                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Index">Read Expenses</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm lift">
+                    <div class="card-body">
+                        <h2 class="h5 mb-2">Settle Up</h2>
+                        <p class="text-muted mb-3">See balances and suggested payments so everyone gets square fast.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <!-- Botpress Chat Widget -->
+    <script>
+        window.botpressWebChat = {
+            botId: "YOUR_BOTPRESS_ID",
+            clientId: "YOUR_BOTPRESS_ID",
+            composerPlaceholder: "Ask FairShare assistant…",
+            showPoweredBy: false,
+            enablePersistHistory: true
+        };
+    </script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2025/10/18/22/20251018223803-X5OC182J.js" defer></script>
+}

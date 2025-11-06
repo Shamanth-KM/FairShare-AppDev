@@ -1,0 +1,205 @@
+@model IEnumerable<FairShare.Web.Models.Expense>
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Expenses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var items = Model?.ToList() ?? new List<FairShare.Web.Models.Expense>();
+    var total = items.Sum(x => (decimal)(x?.Amount ?? 0M));
+    var count = items.Count;
+
+    // Serialize only the fields needed for charts (safe for JS)
+    var jsData = JsonSerializer.Serialize(
+        items.Select(e => new
+        {
+            description = e?.Description ?? "",
+            amount = (decimal)(e?.Amount ?? 0M),
+            // use nav props if present, else a safe label
+            category = e?.Group?.Name ?? "Other",
+            payer = e?.PaidByUser?.Name ?? "Unknown",
+            // works for DateTime and DateTime? alike
+            date = (e?.SpentOnUtc is DateTime dt) ? dt.ToString("yyyy-MM-dd") : ""
+        })
+    );
+
+    string Money(decimal v) => v.ToString("C");
+}
+
+<header class="position-relative overflow-hidden bg-dark">
+    <div class="container position-relative py-5">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="display-5 fw-bold mb-2 text-white">Expenses</h1>
+                <p class="lead mb-0 text-white-50">Track every expense, who paid, and when.</p>
+            </div>
+            <div>
+                <a class="btn btn-primary btn-lg" asp-action="Create">Add Expense</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container my-4">
+
+    <!-- TABLE CARD -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h5 mb-0">Expense Records</h2>
+                <div class="small text-muted">@count item(s) • @Money(total) total</div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Group</th>
+                            <th>Paid By</th>
+                            <th>Date</th>
+                            <th class="text-end"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!items.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-muted">
+                                    No expense records yet. Use <a asp-action="Create">Add Expense</a> to create one.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var e in items)
+                            {
+                                <tr>
+                                    <td>@(e?.Description ?? "")</td>
+                                    <td>@((e?.Amount ?? 0M).ToString("C"))</td>
+                                    <td>@(e?.Group?.Name ?? "Other")</td>
+                                    <td>@(e?.PaidByUser?.Name ?? "Unknown")</td>
+                                    <td>
+                                        @{
+                                            var dateText = (e?.SpentOnUtc is DateTime dt)
+                                            ? dt.ToString("M/d/yyyy")
+                                            : "";
+                                        }
+                                        @dateText
+                                    </td>
+                                    <td class="text-end">
+                                        
+                                        <a class="btn btn-sm btn-warning"
+                                           asp-controller="Expenses" asp-action="Edit" asp-route-id="@e.Id">Edit</a>
+
+                                        <a class="btn btn-sm btn-danger"
+                                           asp-controller="Expenses" asp-action="Delete" asp-route-id="@e.Id">Delete</a>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h2 class="h5 mb-0">Monthly Group Spend Trend</h2>
+        </div>
+        <div class="card-body">
+            <div class="ratio ratio-16x9">
+                <canvas id="chartMonthly" role="img" aria-label="Monthly group spend"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h2 class="h5 mb-0">Spend by Category</h2>
+                </div>
+                <div class="card-body">
+                    <div class="ratio ratio-16x9">
+                        <canvas id="chartCategory" role="img" aria-label="Group spend by category"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h2 class="h5 mb-0">Spend by Person</h2>
+                </div>
+                <div class="card-body">
+                    <div class="ratio ratio-16x9">
+                        <canvas id="chartPayer" role="img" aria-label="Per-person shares"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+    <script>
+        // ---- data from server ----
+        const expenses = @Html.Raw(jsData);
+
+        // ---- helpers ----
+        const monthKey = (iso) => (iso || '').slice(0, 7); // 'YYYY-MM'
+        const sumBy = (arr, keyFn, valFn) => {
+            const m = {};
+            arr.forEach(x => {
+                const k = keyFn(x);
+                const v = Number(valFn(x)) || 0;
+                if (!k) return;
+                m[k] = (m[k] || 0) + v;
+            });
+            return m;
+        };
+
+        // monthly totals
+        const monthlyMap = sumBy(expenses, e => monthKey(e.date), e => e.amount);
+        const months = Object.keys(monthlyMap).sort();
+        const monthlyValues = months.map(k => monthlyMap[k]);
+
+        // by category
+        const catMap = sumBy(expenses, e => e.category || 'Other', e => e.amount);
+        const catLabels = Object.keys(catMap);
+        const catValues = catLabels.map(k => catMap[k]);
+
+        // by payer
+        const payerMap = sumBy(expenses, e => e.payer || 'Unknown', e => e.amount);
+        const payerLabels = Object.keys(payerMap);
+        const payerValues = payerLabels.map(k => payerMap[k]);
+
+        // charts
+        new Chart(document.getElementById('chartMonthly'), {
+            type: 'line',
+            data: { labels: months, datasets: [{ label: 'Spend', data: monthlyValues, tension: 0.3 }] },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+
+        new Chart(document.getElementById('chartCategory'), {
+            type: 'bar',
+            data: { labels: catLabels, datasets: [{ label: 'Amount', data: catValues }] },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+
+        new Chart(document.getElementById('chartPayer'), {
+            type: 'doughnut',
+            data: { labels: payerLabels, datasets: [{ data: payerValues }] },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    </script>
+}

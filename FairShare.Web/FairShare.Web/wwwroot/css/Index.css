@@ -1,0 +1,237 @@
+﻿/* =====================================================
+   FAIRSHARE INDEX PAGE — FINAL VISUAL MATCH (FULL FILE)
+   ===================================================== */
+
+/* ---------- Root Palette ---------- */
+:root {
+    --brand: #6c5ce7;
+    --brand-2: #a29bfe;
+    --ink: #111827;
+    --muted: #6b7280;
+    --page-bg: #f6f7fb;
+    --card-bg: #ffffff;
+    --hero-overlay: rgba(0,0,0,.15);
+    --hero-bg1: #6c5ce7;
+    --hero-bg2: #a29bfe;
+    color-scheme: light;
+}
+
+/* ---------- Base ---------- */
+body {
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5 {
+    letter-spacing: .2px;
+}
+
+.text-muted {
+    color: var(--muted) !important;
+}
+
+/* ---------- Hero Section ---------- */
+.hero-section {
+    position: relative;
+    width: 100%;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(108,92,231,.25), transparent), linear-gradient(135deg, var(--hero-bg1), var(--hero-bg2)) !important;
+    color: #fff;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    /* Added for screenshot parity */
+    border-radius: 1.5rem;
+    margin: 2rem 0 2.25rem;
+    overflow: hidden; /* clip overlay to rounded corners */
+    box-shadow: 0 10px 30px rgba(17,24,39,.12);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay);
+    border-radius: inherit; /* follows hero rounding */
+}
+
+.hero-title {
+    color: #fff !important;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,.15);
+    line-height: 1.1; /* tighter like ref */
+}
+
+.hero-subtitle {
+    color: rgba(255,255,255,.85) !important;
+    font-size: 1.125rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,.1);
+    letter-spacing: .1px;
+}
+
+/* ---------- Glass Card (Right stats) ---------- */
+.glass-card {
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(17,24,39,.18);
+}
+
+    .glass-card .text-muted {
+        color: rgba(255,255,255,.65) !important;
+    }
+
+    .glass-card hr {
+        margin: .9rem 0;
+        border-color: rgba(255,255,255,.35);
+        opacity: .6;
+    }
+
+/* ---------- Cards (feature tiles) ---------- */
+.card {
+    border-radius: 1rem;
+    border: 1px solid rgba(0,0,0,.06);
+    background: var(--card-bg);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.05);
+}
+
+    .card h2.h5 {
+        font-weight: 600;
+        color: var(--ink);
+    }
+
+    .card p {
+        color: var(--muted);
+    }
+
+    .card .btn {
+        margin-top: .5rem;
+    }
+
+/* Lift hover */
+.lift {
+    transition: transform .18s ease, box-shadow .18s ease;
+    border-radius: 1rem;
+}
+
+    .lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 40px rgba(17,24,39,.18);
+    }
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    background: linear-gradient(135deg,var(--brand), #5a4bd5);
+    border: 0;
+    box-shadow: 0 6px 16px rgba(92,70,255,.35);
+}
+
+    .btn-primary:hover {
+        filter: brightness(1.02);
+        box-shadow: 0 10px 24px rgba(92,70,255,.45);
+    }
+
+.btn-outline-primary {
+    color: var(--brand);
+    border-color: var(--brand);
+}
+
+    .btn-outline-primary:hover {
+        background: var(--brand);
+        color: #fff;
+    }
+
+.btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+}
+
+    .btn-outline-light:hover {
+        background: #fff;
+        color: var(--brand);
+    }
+
+/* ---------- Navbar ---------- */
+.navbar.bg-dark {
+    background-color: #111827 !important;
+}
+
+.navbar .navbar-brand {
+    font-weight: 700;
+    color: #fff !important;
+    letter-spacing: .2px;
+}
+
+.navbar .nav-link {
+    color: #d1d5db !important;
+    font-weight: 600;
+    padding: .75rem 1rem;
+}
+
+    .navbar .nav-link:hover {
+        color: #fff !important;
+    }
+
+    .navbar .nav-link.active {
+        color: #fff !important;
+        position: relative;
+        opacity: 1;
+    }
+
+        .navbar .nav-link.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            width: 28px;
+            height: 3px;
+            margin: 0 auto;
+            border-radius: 999px;
+            background: linear-gradient(90deg,var(--brand),var(--brand-2));
+        }
+
+/* ---------- Footer ---------- */
+footer.bg-dark {
+    background-color: #111827 !important;
+    color: #9ca3af !important;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+footer .small {
+    color: #9ca3af !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:991.98px) {
+    .hero-section {
+        text-align: center;
+        padding: 4rem 1rem;
+        border-radius: 1.25rem;
+        margin: 1.25rem 0 1.75rem;
+    }
+
+    .glass-card {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width:575.98px) {
+    .hero-section h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .glass-card {
+        padding: 1.25rem;
+    }
+
+    .card h2.h5 {
+        font-size: 1.1rem;
+    }
+}
