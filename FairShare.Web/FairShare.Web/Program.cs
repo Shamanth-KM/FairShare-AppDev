@@ -1,6 +1,8 @@
 using FairShare.Web.Data;
 using FairShare.Web.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,18 @@ builder.Services.AddHttpClient<ICurrencyRateService, CurrencyRateService>(client
     client.Timeout = TimeSpan.FromSeconds(timeout);
 });
 
+// 🔐 Authentication + Authorization
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opt =>
+    {
+        opt.LoginPath = "/Account/Login";
+        opt.LogoutPath = "/Account/Logout";
+        opt.AccessDeniedPath = "/Account/Login";
+        opt.SlidingExpiration = true;
+        opt.ExpireTimeSpan = TimeSpan.FromDays(14);
+    });
+
 var app = builder.Build();
 Console.WriteLine($"DB Provider => {builder.Configuration["DatabaseProvider"]}");
 
@@ -49,6 +63,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

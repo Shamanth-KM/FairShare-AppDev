@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "FairShare — Shared Expense Tracker";
+    ViewData["Title"] = "FairShare â€” Shared Expense Tracker";
 }
 
 <header class="hero-section position-relative overflow-hidden">
@@ -11,11 +11,25 @@
                     Split group expenses. Settle up. Stay friends.
                 </h1>
                 <p class="lead mb-4 hero-subtitle">
-                    FairShare helps roommates, friends, and teams track shared costs and see who owes whom — clearly and fairly.
+                    FairShare helps roommates, friends, and teams track shared costs and see who owes whom &mdash; clearly and fairly.
                 </p>
+
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-primary btn-lg" asp-controller="Expenses" asp-action="Index">View Analytics</a>
-                    <a class="btn btn-outline-light btn-lg" asp-controller="Home" asp-action="About">How it Works</a>
+                    <!-- Always allowed; if [Authorize] protects Expenses, unauth users will be redirected to Login -->
+                    <a class="btn btn-primary btn-lg" asp-controller="Expenses" asp-action="Index">
+                        View Analytics
+                    </a>
+
+                    <a class="btn btn-outline-light btn-lg" asp-controller="Home" asp-action="About">
+                        How it Works
+                    </a>
+
+                    @if (!(User?.Identity?.IsAuthenticated ?? false))
+                    {
+                        <a class="btn btn-outline-warning btn-lg" asp-controller="Account" asp-action="Login">
+                            Login
+                        </a>
+                    }
                 </div>
             </div>
 
@@ -51,8 +65,12 @@
                 <div class="card h-100 shadow-sm lift">
                     <div class="card-body">
                         <h2 class="h5 mb-2">Add Expenses</h2>
-                        <p class="text-muted mb-3">Record who paid, what for, and how to split — equally or custom weights.</p>
-                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Create">Create Expenses</a>
+                        <p class="text-muted mb-3">
+                            Record who paid, what for, and how to split &mdash; equally or custom weights.
+                        </p>
+                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Create">
+                            Create Expenses
+                        </a>
                     </div>
                 </div>
             </div>
@@ -61,8 +79,12 @@
                 <div class="card h-100 shadow-sm lift">
                     <div class="card-body">
                         <h2 class="h5 mb-2">View Expenses</h2>
-                        <p class="text-muted mb-3">Set up a group for roommates, trips, or projects. Invite members and start logging expenses.</p>
-                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Index">Read Expenses</a>
+                        <p class="text-muted mb-3">
+                            Set up a group for roommates, trips, or projects. Invite members and start logging expenses.
+                        </p>
+                        <a class="btn btn-outline-primary btn-sm" asp-controller="Expenses" asp-action="Index">
+                            Read Expenses
+                        </a>
                     </div>
                 </div>
             </div>
@@ -71,7 +93,9 @@
                 <div class="card h-100 shadow-sm lift">
                     <div class="card-body">
                         <h2 class="h5 mb-2">Settle Up</h2>
-                        <p class="text-muted mb-3">See balances and suggested payments so everyone gets square fast.</p>
+                        <p class="text-muted mb-3">
+                            See balances and suggested payments so everyone gets square fast.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -85,7 +109,7 @@
         window.botpressWebChat = {
             botId: "YOUR_BOTPRESS_ID",
             clientId: "YOUR_BOTPRESS_ID",
-            composerPlaceholder: "Ask FairShare assistant…",
+            composerPlaceholder: "Ask FairShare assistantâ€¦",
             showPoweredBy: false,
             enablePersistHistory: true
         };

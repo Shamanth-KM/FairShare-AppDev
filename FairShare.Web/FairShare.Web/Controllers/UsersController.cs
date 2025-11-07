@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FairShare.Web.Data;
@@ -5,6 +6,7 @@ using FairShare.Web.Models;
 
 namespace FairShare.Web.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _ctx;
