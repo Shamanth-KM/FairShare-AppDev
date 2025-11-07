@@ -1,0 +1,43 @@
+@model FairShare.Web.Models.Expense
+@{
+    ViewData["Title"] = "Delete Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="position-relative overflow-hidden bg-dark">
+    <div class="container position-relative py-5">
+        <h1 class="display-6 fw-bold text-white mb-0">Delete Expense</h1>
+    </div>
+</header>
+
+<main class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p class="mb-3 text-danger">Are you sure you want to delete this expense? This action cannot be undone.</p>
+
+            <dl class="row">
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+
+                <dt class="col-sm-3">Amount</dt>
+                <dd class="col-sm-9">@Model.Amount.ToString("C")</dd>
+
+                <dt class="col-sm-3">Group</dt>
+                <dd class="col-sm-9">@Model.Group?.Name</dd>
+
+                <dt class="col-sm-3">Paid By</dt>
+                <dd class="col-sm-9">@Model.PaidByUser?.Name</dd>
+
+                <dt class="col-sm-3">Date</dt>
+                <dd class="col-sm-9">@Model.SpentOnUtc.ToString("M/d/yyyy")</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post" class="d-flex gap-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</main>

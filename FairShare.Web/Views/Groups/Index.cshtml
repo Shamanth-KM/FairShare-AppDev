@@ -1,0 +1,39 @@
+@model IEnumerable<FairShare.Web.Models.Group>
+
+@{
+    ViewData["Title"] = "Groups";
+    var counts = ViewBag.MemberCounts as System.Collections.Generic.IDictionary<int,int>;
+}
+
+<h2>Groups</h2>
+
+<p class="text-end">
+    <a class="btn btn-primary" asp-action="Create">Add Group</a>
+</p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Members</th>
+            <th style="width:220px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var g in Model)
+    {
+        var memberCount = (counts != null && counts.TryGetValue(g.Id, out var c)) ? c : 0;
+        <tr>
+            <td>@g.Name</td>
+            <td>@(string.IsNullOrWhiteSpace(g.Description) ? "—" : g.Description)</td>
+            <td><span class="badge bg-secondary">@memberCount</span></td>
+            <td class="text-end">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@g.Id">Details</a>
+                <a class="btn btn-warning btn-sm ms-1" asp-action="Edit" asp-route-id="@g.Id">Edit</a>
+                <a class="btn btn-danger btn-sm ms-1" asp-action="Delete" asp-route-id="@g.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
