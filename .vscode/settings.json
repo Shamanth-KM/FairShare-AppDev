@@ -1,0 +1,4 @@
+{
+  "azureAppService.deploySubpath": "src/FairShare.Web/bin/Release/net8.0/publish",
+  "appService.defaultWebAppToDeploy": "/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/<YOUR_RESOURCE_GROUP>/providers/Microsoft.Web/sites/fairshare-webapp"
+}

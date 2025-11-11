@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 // MVC
 builder.Services.AddControllersWithViews();
 
@@ -70,5 +73,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// --- TEMP: Verify configuration in Azure ---
+Console.WriteLine("🔹 Environment: " + builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
+Console.WriteLine("🔹 DB Provider: " + builder.Configuration["DatabaseProvider"]);
+Console.WriteLine("🔹 Connection: " + builder.Configuration.GetConnectionString("DefaultConnection"));
+Console.WriteLine("🔹 API Base URL: " + builder.Configuration["ExternalApi:BaseUrl"]);
 
 app.Run();

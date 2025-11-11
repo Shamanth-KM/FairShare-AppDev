@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Publish FairShare (Release)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "src/FairShare.Web/FairShare.Web.csproj",
+        "-c", "Release",
+        "-o", "src/FairShare.Web/bin/Release/net8.0/publish"
+      ],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
